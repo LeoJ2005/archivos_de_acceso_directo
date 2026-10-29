@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archivo / Directo — Organización de archivos</title>
+  <meta name="description" content="Miniweb informativa sobre archivos de acceso directo y otras organizaciones de archivos en bases de datos: indexada, secuencial indexada, hashing, heap, clustering y árboles B/B+.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2317140f'/%3E%3Cpath d='M9 8h4v16H9zM19 8h4l-6 16h-4z' fill='%23e8552b'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="light">
+
+  <!-- Textura de papel -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Barra superior fija -->
+  <header class="topbar">
+    <a class="brand" href="#ficha-1" data-go="0" aria-label="Archivo/Directo — ir al inicio">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__text">Archivo<span class="brand__slash">/</span>Directo</span>
+    </a>
+    <p class="topbar__meta">Organización de archivos · SMBD</p>
+    <div class="topbar__count" aria-hidden="true">
+      <span class="topbar__now" id="counterNow">01</span>
+      <span class="topbar__sep">/</span>
+      <span class="topbar__total" id="counterTotal">09</span>
+    </div>
+  </header>
+
+  <div class="progress" aria-hidden="true">
+    <span class="progress__fill" id="progressFill"></span>
+  </div>
+
+  <p class="edge-label" aria-hidden="true">Sistemas de bases de datos · 2026</p>
+
+  <!-- Índice lateral -->
+  <nav class="rail" id="rail" aria-label="Índice de fichas"></nav>
+
+  <!-- Contenido -->
+  <main class="deck" id="deck" data-dir="next">
+
+    <!-- 00 · PORTADA -->
+    <section class="slide slide--hero is-active" data-theme="light" data-accent="#d64524" data-name="Inicio" data-ghost="00" aria-labelledby="s0-title" aria-hidden="false">
+      <div class="slide__scroll">
+        <div class="slide__body hero">
+          <div class="hero__copy">
+            <p class="eyebrow reveal" style="--d:80ms">Tema 04 · Organización de archivos</p>
+            <h1 class="display reveal" style="--d:150ms" id="s0-title">Archivos de<br>acceso <em>directo</em><span class="dot">.</span></h1>
+            <p class="lede reveal" style="--d:260ms">Aquellos que permiten buscar un registro específico sin necesidad de revisar todos los registros anteriores. Una guía breve, con las otras formas de organizar los datos.</p>
+            <div class="hero__actions reveal" style="--d:340ms">
+              <button class="btn btn--solid" type="button" data-go="1">
+                Empezar el recorrido
+                <span class="btn__arrow" aria-hidden="true">→</span>
+              </button>
+              <span class="hint-inline">09 fichas · 4 min de lectura</span>
+            </div>
+          </div>
+
+          <aside class="hero__aside reveal" style="--d:300ms" aria-hidden="true">
+            <div class="ficha">
+              <span class="ficha__tape"></span>
+              <div class="ficha__head">
+                <span>Ficha de archivo</span>
+                <span>N.º 001</span>
+              </div>
+              <p class="ficha__num">1712345678</p>
+              <dl class="ficha__rows">
+                <div><dt>Clave</dt><dd>Cédula</dd></div>
+                <div><dt>Acceso</dt><dd>Directo</dd></div>
+                <div><dt>Tiempo</dt><dd>0.004 s</dd></div>
+              </dl>
+              <div class="ficha__foot"><span class="tick"></span> Registro localizado</div>
+            </div>
+            <p class="hero__scribble">↳ sin revisar los anteriores</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 · QUÉ SON -->
+    <section class="slide" data-theme="light" data-accent="#d64524" data-name="¿Qué son?" data-ghost="01" aria-labelledby="s1-title" aria-hidden="true">
+      <div class="slide__scroll">
+        <div class="slide__body">
+          <header class="slide__head">
+            <p class="eyebrow reveal" style="--d:60ms">01 · Acceso directo</p>
+            <h2 class="title reveal" style="--d:120ms" id="s1-title">Localizar <em>sin recorrer</em>.</h2>
+            <p class="lede reveal" style="--d:180ms">Un archivo de acceso directo encuentra un registro a partir de su clave, sin leer los que están antes. La clave funciona como un atajo hacia la información.</p>
+          </header>
+
+          <div class="split">
+            <div class="query reveal" style="--d:260ms">
+              <div class="query__bar">
+                <span class="query__label">Consulta</span>
+                <span class="query__field"><span class="query__value">1712345678</span><span class="caret"></span></span>
+                <span class="query__btn">Buscar</span>
+              </div>
+
+              <div class="query__result">
+                <div class="query__avatar">MC</div>
+                <div class="query__who">
+                  <p class="query__name">María Cedeño</p>
+                  <p class="query__meta">Ing. en Sistemas · 4.º semestre</p>
+                </div>
+                <span class="query__badge">1 resultado</span>
+              </div>
+
+              <div class="ticks" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span class="is-on"></span>
+              </div>
+
+              <div class="query__foot">
+                <span>Registros revisados: <strong>1</strong> de 12.480</span>
+                <span class="query__time">0.004 s</span>
+              </div>
+            </div>
+
+            <div class="quote reveal" style="--d:320ms">
+              <p>“En una universidad, al buscar a un estudiante por su número de cédula, el sistema localiza su información sin revisar la de todos los demás.”</p>
+              <footer>Ejemplo · consulta por cédula</footer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · CARACTERÍSTICAS -->
+    <section class="slide" data-theme="light" data-accent="#2f5bd7" data-name="Características" data-ghost="02" aria-labelledby="s2-title" aria-hidden="true">
+      <div class="slide__scroll">
+        <div class="slide__body">
+          <header class="slide__head">
+            <p class="eyebrow reveal" style="--d:60ms">02 · Características</p>
+            <h2 class="title reveal" style="--d:120ms" id="s2-title">Cuatro rasgos que los <em>definen</em>.</h2>
+          </header>
+
+          <ol class="features">
+            <li class="feature reveal" style="--d:220ms">
+              <span class="feature__num">01</span>
+              <h3>Encuentran rápido</h3>
+              <p>La búsqueda llega al registro en pocos pasos, sin recorridos largos por el archivo.</p>
+            </li>
+            <li class="feature reveal" style="--d:290ms">
+              <span class="feature__num">02</span>
+              <h3>Usan claves</h3>
+              <p>Se apoyan en identificadores: cédula, código, matrícula o cualquier clave única.</p>
+            </li>
+            <li class="feature reveal" style="--d:360ms">
+              <span class="feature__num">03</span>
+              <h3>Sin orden secuencial</h3>
+              <p>No hace falta revisar los registros anteriores para encontrar el que se busca.</p>
+            </li>
+            <li class="feature reveal" style="--d:430ms">
+              <span class="feature__num">04</span>
+              <h3>Grandes volúmenes</h3>
+              <p>Son útiles en sistemas que manejan miles o millones de registros.</p>
+            </li>
+          </ol>
+
+          <p class="strip reveal" style="--d:500ms">La clave identifica el registro y su ubicación: eso evita revisar a todos los demás.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 · VENTAJAS / DESVENTAJAS -->
+    <section class="slide" data-theme="light" data-accent="#2b6f4f" data-name="Ventajas y desventajas" data-ghost="03" aria-labelledby="s3-title" aria-hidden="true">
+      <div class="slide__scroll">
+        <div class="slide__body">
+          <header class="slide__head">
+            <p class="eyebrow reveal" style="--d:60ms">03 · Balance</p>
+            <h2 class="title reveal" style="--d:120ms" id="s3-title">Rapidez con <em>condiciones</em>.</h2>
+          </header>
+
+          <div class="balance">
+            <article class="panel panel--light reveal" style="--d:220ms">
+              <header class="panel__head">
+                <span class="panel__sign">+</span>
+                <h3>Ventajas</h3>
+              </header>
+              <ul class="list list--plus">
+                <li>Permiten realizar consultas rápidas.</li>
+                <li>Ahorran tiempo al usuario.</li>
+                <li>Mejoran el rendimiento de los sistemas.</li>
+              </ul>
+              <p class="panel__note">La clave va directo a la ubicación del registro.</p>
+            </article>
+
+            <article class="panel panel--ink reveal" style="--d:300ms">
+              <header class="panel__head">
+                <span class="panel__sign">−</span>
+                <h3>Desventajas</h3>
+              </header>
+              <ul class="list list--minus">
+                <li>Necesitan mecanismos adicionales para localizar los registros.</li>
+                <li>Presentan problemas cuando varios datos comparten una misma ubicación.</li>
+              </ul>
+              <p class="panel__note">Dos claves en la misma dirección producen una colisión.</p>
+            </article>
+          </div>
+
+          <p class="strip reveal" style="--d:380ms">El acceso directo no elimina el orden del archivo: lo vuelve opcional para la consulta.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · OTRAS ORGANIZACIONES I -->
+    <section class="slide" data-theme="light" data-accent="#a86a12" data-name="Otras organizaciones" data-ghost="04" aria-labelledby="s4-title" aria-hidden="true">
+      <div class="slide__scroll">
+        <div class="slide__body">
+          <header class="slide__head">
+            <p class="eyebrow reveal" style="--d:60ms">04 · Otras organizaciones</p>
+            <h2 class="title reveal" style="--d:120ms" id="s4-title">Otras formas de <em>organizar</em>.</h2>
+            <p class="lede reveal" style="--d:180ms">Además del acceso directo, una base de datos puede estructurar sus registros de varias maneras. Estas son las más comunes.</p>
+          </header>
+
+          <div class="orgs">
+            <article class="org reveal" style="--d:260ms">
+              <div class="org__top">
+                <span class="org__num">01 / 02</span>
+                <span class="org__tag">Índice</span>
+              </div>
+              <h3>Organización indexada</h3>
+              <p>Utiliza un índice que permite encontrar rápidamente la información, de manera similar al índice de un libro.</p>
+              <p class="org__eg">Buscar un estudiante mediante su código en una base de datos.</p>
+
+              <div class="map" aria-hidden="true">
+                <div class="map__head"><span>Índice</span><span>Registro</span></div>
+                <div class="map__row"><span>001</span><span class="map__leader"></span><span class="map__rec"></span></div>
+                <div class="map__row is-on"><span>002</span><span class="map__leader"></span><span class="map__rec"></span></div>
+                <div class="map__row"><span>003</span><span class="map__leader"></span><span class="map__rec"></span></div>
+              </div>
+            </article>
+
+            <article class="org reveal" style="--d:340ms">
+              <div class="org__top">
+                <span class="org__num">02 / 02</span>
+                <span class="org__tag">Orden + índice</span>
+              </div>
+              <h3>Secuencial indexada</h3>
+              <p>Combina el almacenamiento ordenado de los registros con índices que facilitan su búsqueda.</p>
+              <p class="org__eg">Consultar empleados por su código y generar una lista ordenada.</p>
+
+              <div class="shelf" aria-hidden="true">
+                <div class="shelf__item"><span class="shelf__dot"></span><span class="shelf__bar" style="--h:34%"></span></div>
+                <div class="shelf__item"><span class="shelf__dot"></span><span class="shelf__bar" style="--h:46%"></span></div>
+                <div class="shelf__item"><span class="shelf__dot"></span><span class="shelf__bar" style="--h:58%"></span></div>
+                <div class="shelf__item is-on"><span class="shelf__dot"></span><span class="shelf__bar" style="--h:70%"></span></div>
+                <div class="shelf__item"><span class="shelf__dot"></span><span class="shelf__bar" style="--h:82%"></span></div>
+                <div class="shelf__item"><span class="shelf__dot"></span><span class="shelf__bar" style="--h:92%"></span></div>
+                <div class="shelf__item"><span class="shelf__dot"></span><span class="shelf__bar" style="--h:100%"></span></div>
+              </div>
+              <div class="viz-labels" aria-hidden="true"><span>índice</span><span>registros ordenados</span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 · HASHING / HEAP -->
+    <section class="slide" data-theme="dark" data-accent="#ff6a3d" data-name="Dispersión y montículo" data-ghost="05" aria-labelledby="s5-title" aria-hidden="true">
+      <div class="slide__scroll">
+        <div class="slide__body">
+          <header class="slide__head">
+            <p class="eyebrow reveal" style="--d:60ms">05 · Dispersión y montículo</p>
+            <h2 class="title reveal" style="--d:120ms" id="s5-title">Calcular la <em>dirección</em>.</h2>
+          </header>
+
+          <div class="orgs">
+            <article class="org reveal" style="--d:240ms">
+              <div class="org__top">
+                <span class="org__num">01 / 02</span>
+                <span class="org__tag">Hashing</span>
+              </div>
+              <h3>Dispersión</h3>
+              <p>Utiliza una función matemática para calcular la ubicación donde se encuentra almacenado un registro.</p>
+
+              <div class="formula" aria-hidden="true">
+                <span class="formula__box">clave <b>4821</b></span>
+                <span class="formula__op">→</span>
+                <span class="formula__box formula__box--fn">h(k) = k mod 97</span>
+                <span class="formula__op">→</span>
+                <span class="formula__box formula__box--out">dirección <b>21</b></span>
+              </div>
+
+              <p class="org__eg">Localizar un producto mediante su código en un sistema de inventario.</p>
+            </article>
+
+            <article class="org reveal" style="--d:320ms">
+              <div class="org__top">
+                <span class="org__num">02 / 02</span>
+                <span class="org__tag">Heap</span>
+              </div>
+              <h3>Montículo</h3>
+              <p>Almacena los registros sin seguir un orden específico, lo que facilita la incorporación de nueva información.</p>
+
+              <div class="heap" aria-hidden="true">
+                <span style="--r:-4deg">op. 0142</span>
+                <span style="--r:2deg">op. 0143</span>
+                <span class="heap__new" style="--r:-2deg">+ op. 0144</span>
+                <span style="--r:3deg">op. 0145</span>
+                <span style="--r:-3deg">op. 0146</span>
+                <span style="--r:1deg">op. 0147</span>
+              </div>
+
+              <p class="org__eg">Registrar continuamente nuevas operaciones en un sistema.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 · CLUSTERING / ÁRBOLES -->
+    <section class="slide" data-theme="light" data-accent="#6a4bd6" data-name="Agrupación y árboles" data-ghost="06" aria-labelledby="s6-title" aria-hidden="true">
+      <div class="slide__scroll">
+        <div class="slide__body">
+          <header class="slide__head">
+            <p class="eyebrow reveal" style="--d:60ms">06 · Agrupación y árboles</p>
+            <h2 class="title reveal" style="--d:120ms" id="s6-title">Cerca, y <em>en niveles</em>.</h2>
+          </header>
+
+          <div class="orgs">
+            <article class="org reveal" style="--d:240ms">
+              <div class="org__top">
+                <span class="org__num">01 / 02</span>
+                <span class="org__tag">Clustering</span>
+              </div>
+              <h3>Organización agrupada</h3>
+              <p>Consiste en almacenar cerca los registros que están relacionados, para facilitar su recuperación.</p>
+              <p class="org__eg">Guardar juntos los datos de una sección universitaria y sus estudiantes inscritos.</p>
+
+              <svg class="viz" viewBox="0 0 300 118" role="img" aria-label="Dos grupos de registros relacionados almacenados uno cerca del otro">
+                <rect x="8" y="12" width="118" height="84" rx="6" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-dasharray="4 4"/>
+                <g fill="currentColor" fill-opacity=".38">
+                  <circle cx="30" cy="36" r="4"/><circle cx="50" cy="30" r="4"/><circle cx="68" cy="40" r="4"/>
+                  <circle cx="38" cy="60" r="4"/><circle cx="60" cy="64" r="4"/><circle cx="84" cy="58" r="4"/>
+                  <circle cx="48" cy="84" r="4"/><circle cx="74" cy="82" r="4"/>
+                </g>
+                <text x="20" y="111" font-family="monospace" font-size="7" fill="currentColor" opacity=".55">SECCIÓN 04</text>
+                <path d="M130 54h40" stroke="currentColor" stroke-opacity=".3" stroke-dasharray="2 4"/>
+                <rect x="174" y="12" width="118" height="84" rx="6" fill="none" stroke="var(--accent)" stroke-dasharray="4 4"/>
+                <g fill="var(--accent)">
+                  <circle cx="196" cy="36" r="4"/><circle cx="216" cy="30" r="4"/><circle cx="234" cy="40" r="4"/>
+                  <circle cx="204" cy="60" r="4"/><circle cx="226" cy="64" r="4"/><circle cx="250" cy="58" r="4"/>
+                  <circle cx="214" cy="84" r="4"/><circle cx="240" cy="82" r="4"/>
+                </g>
+                <text x="186" y="111" font-family="monospace" font-size="7" fill="var(--accent)">ESTUDIANTES</text>
+              </svg>
+            </article>
+
+            <article class="org reveal" style="--d:320ms">
+              <div class="org__top">
+                <span class="org__num">02 / 02</span>
+                <span class="org__tag">Índices jerárquicos</span>
+              </div>
+              <h3>Árboles B y B+</h3>
+              <p>Utilizan estructuras de índices organizadas en diferentes niveles para realizar búsquedas rápidas y ordenadas.</p>
+              <p class="org__eg">Consultar los estudiantes inscritos durante un período académico determinado.</p>
+
+              <svg class="viz" viewBox="0 0 300 122" role="img" aria-label="Árbol de índices de tres niveles con un camino resaltado">
+                <text x="284" y="22" font-family="monospace" font-size="7" fill="currentColor" opacity=".4" text-anchor="end">N0</text>
+                <text x="284" y="64" font-family="monospace" font-size="7" fill="currentColor" opacity=".4" text-anchor="end">N1</text>
+                <text x="284" y="106" font-family="monospace" font-size="7" fill="currentColor" opacity=".4" text-anchor="end">N2</text>
+                <g stroke="currentColor" stroke-opacity=".28" stroke-width="1">
+                  <line x1="150" y1="30" x2="86" y2="54"/>
+                  <line x1="150" y1="30" x2="214" y2="54"/>
+                  <line x1="86" y1="72" x2="44" y2="94"/>
+                  <line x1="86" y1="72" x2="128" y2="94"/>
+                  <line x1="214" y1="72" x2="172" y2="94"/>
+                  <line x1="214" y1="72" x2="256" y2="94"/>
+                </g>
+                <g stroke="var(--accent)" stroke-width="1.5">
+                  <line x1="150" y1="30" x2="214" y2="54"/>
+                  <line x1="214" y1="72" x2="172" y2="94"/>
+                </g>
+                <g fill="var(--paper)" stroke="currentColor" stroke-width="1">
+                  <circle cx="150" cy="22" r="10"/>
+                  <circle cx="86" cy="62" r="10"/>
+                  <circle cx="214" cy="62" r="10"/>
+                  <circle cx="44" cy="100" r="10"/>
+                  <circle cx="128" cy="100" r="10"/>
+                  <circle cx="172" cy="100" r="10"/>
+                  <circle cx="256" cy="100" r="10"/>
+                </g>
+                <g fill="var(--accent)">
+                  <circle cx="150" cy="22" r="3"/>
+                  <circle cx="214" cy="62" r="3"/>
+                  <circle cx="172" cy="100" r="3"/>
+                </g>
+              </svg>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 · SMBD MULTIUSUARIO -->
+    <section class="slide" data-theme="light" data-accent="#1f7a6e" data-name="SMBD multiusuario" data-ghost="07" aria-labelledby="s7-title" aria-hidden="true">
+      <div class="slide__scroll">
+        <div class="slide__body">
+          <header class="slide__head">
+            <p class="eyebrow reveal" style="--d:60ms">07 · Importancia en SMBD multiusuarios</p>
+            <h2 class="title reveal" style="--d:120ms" id="s7-title">Muchos usuarios, <em>un archivo</em>.</h2>
+            <p class="lede reveal" style="--d:180ms">Una buena organización permite manejar grandes cantidades de información de forma eficiente, incluso cuando varias personas consultan la misma base de datos al mismo tiempo.</p>
+          </header>
+
+          <div class="roles reveal" style="--d:260ms">
+            <div class="role">
+              <span class="role__num">01</span>
+              <span class="role__who">Profesores</span>
+              <span class="role__what">consultan horarios</span>
+              <span class="role__arrow" aria-hidden="true">→</span>
+            </div>
+            <div class="role">
+              <span class="role__num">02</span>
+              <span class="role__who">Estudiantes</span>
+              <span class="role__what">revisan sus materias</span>
+              <span class="role__arrow" aria-hidden="true">→</span>
+            </div>
+            <div class="role">
+              <span class="role__num">03</span>
+              <span class="role__who">Administrativos</span>
+              <span class="role__what">registran información</span>
+              <span class="role__arrow" aria-hidden="true">→</span>
+            </div>
+          </div>
+
+          <div class="notes reveal" style="--d:340ms">
+            <div class="note-box">
+              <span class="pulse" aria-hidden="true"></span>
+              <div><b>Consultas rápidas</b><span>La organización reduce el tiempo de búsqueda de cada usuario.</span></div>
+            </div>
+            <div class="note-box">
+              <span class="pulse" aria-hidden="true"></span>
+              <div><b>Control de concurrencia</b><span>El SMBD evita conflictos cuando varios usuarios trabajan simultáneamente.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 · CIERRE -->
+    <section class="slide slide--end" data-theme="dark" data-accent="#ff6a3d" data-name="Cierre" data-ghost="08" aria-labelledby="s8-title" aria-hidden="true">
+      <div class="slide__scroll">
+        <div class="slide__body end">
+          <p class="eyebrow reveal" style="--d:60ms">08 · Cierre</p>
+          <h2 class="title reveal" style="--d:120ms" id="s8-title">Encontrar <em>sin recorrer</em>.</h2>
+          <p class="lede reveal" style="--d:180ms">Esa es la idea que sostiene al acceso directo y a las demás organizaciones: llevar la consulta hacia el dato, no el dato hacia la consulta.</p>
+
+          <div class="flow reveal" style="--d:240ms" aria-label="Clave, luego ubicación, luego registro">
+            <span>clave</span><i aria-hidden="true">→</i>
+            <span>ubicación</span><i aria-hidden="true">→</i>
+            <span class="is-on">registro</span>
+          </div>
+
+          <ul class="recap reveal" style="--d:300ms" aria-label="Temas vistos">
+            <li>Acceso directo</li>
+            <li>Indexada</li>
+            <li>Secuencial indexada</li>
+            <li>Hashing</li>
+            <li>Heap</li>
+            <li>Clustering</li>
+            <li>Árboles B / B+</li>
+            <li>Multiusuario</li>
+          </ul>
+
+          <div class="reveal" style="--d:360ms">
+            <button class="btn btn--ghost" type="button" data-go="0">
+              Volver al inicio
+              <span class="btn__arrow" aria-hidden="true">↺</span>
+            </button>
+          </div>
+
+          <span class="stamp" aria-hidden="true">Fin del archivo · 09 / 09</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Pie fijo -->
+  <footer class="footer">
+    <p class="footer__hint">
+      <span class="kbd">←</span><span class="kbd">→</span>
+      <span>para navegar · o desliza</span>
+    </p>
+    <p class="footer__chapter" id="chapterLabel">Inicio</p>
+    <div class="nav">
+      <button class="nav__btn" id="prevBtn" type="button" aria-label="Ficha anterior" disabled>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12H5m6-6-6 6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="nav__btn nav__btn--primary" id="nextBtn" type="button" aria-label="Ficha siguiente">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </footer>
+
+  <p class="sr-only" id="liveStatus" aria-live="polite"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
